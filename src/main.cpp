@@ -85,9 +85,16 @@ void printTitle(const string &myTitle){
        << "**************************************\n";
 }
 
-//string binaryToDecimal(const string &strNumber){
-//
-//}
+string binaryToDecimal(const string &strNumber){
+  int transition;
+  string newString;
+
+  transition = stoi(strNumber);
+
+  for(int i = strNumber.length(); i >= 0; i--){
+
+  }
+}
 
 string decimalToBinary(const string &strNumber){
   int transition;
