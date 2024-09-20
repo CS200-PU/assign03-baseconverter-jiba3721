@@ -9,6 +9,8 @@
 //******************************************************************************
 
 #include <iostream>
+#include <string>
+#include <algorithm>
 
 using namespace std;
 
@@ -20,8 +22,13 @@ string binaryToDecimal(const string &strNumber);
 string decimalToBinary(const string &strNumber);
 
 int main () {
+  string num;
 
   cout << "Hello World" << endl;
+
+  num = decimalToBinary("216");
+
+  cout << num;
   
   return EXIT_SUCCESS;
 }
@@ -78,9 +85,9 @@ void printTitle(const string &myTitle){
        << "**************************************\n";
 }
 
-string binaryToDecimal(const string &strNumber){
-
-}
+//string binaryToDecimal(const string &strNumber){
+//
+//}
 
 string decimalToBinary(const string &strNumber){
   int transition;
@@ -89,7 +96,11 @@ string decimalToBinary(const string &strNumber){
   transition = stoi(strNumber);
 
   while(transition > 0){
-    newstring = 
+    newString += to_string(transition % 2);
+    transition /= 2;
   }
-  
+
+  reverse(newString.begin(),newString.end());
+
+  return "0b" + newString;
 }
