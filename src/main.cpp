@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <cmath>
 
 using namespace std;
 
@@ -20,6 +21,10 @@ string getNumber(const string &prompt);
 void printTitle(const string &myTitle);
 string binaryToDecimal(const string &strNumber);
 string decimalToBinary(const string &strNumber);
+string decimalToHex(const string &strNumber);
+string hexToDecimal(const string &strNumber);
+string hexToBinary(const string &strNumber);
+
 
 int main () {
   string num;
@@ -86,14 +91,16 @@ void printTitle(const string &myTitle){
 }
 
 string binaryToDecimal(const string &strNumber){
-  int transition;
+  int addUp = 0, base = 2, power = 0;
   string newString;
 
-  transition = stoi(strNumber);
-
-  for(int i = strNumber.length(); i >= 0; i--){
-
+  for(int i = strNumber.length() - 1; i >= 0; i--){
+    if(strNumber[i] == '1'){
+      addUp += pow(base, power);
+    }
+    power++;
   }
+  return newString = to_string(addUp);
 }
 
 string decimalToBinary(const string &strNumber){
@@ -111,3 +118,29 @@ string decimalToBinary(const string &strNumber){
 
   return "0b" + newString;
 }
+
+string decimalToHex(const string &strNumber){
+  int transition;
+  string newString;
+
+  transition = stoi(strNumber);
+
+  while(transition > 0){
+    newString += to_string(transition % 16);
+    transition /= 16;
+  }
+
+  reverse(newString.begin(),newString.end());
+
+  for(int i = 0; i < newString.length(); i++){
+    if(newString[i] >= 10){
+      newString[i] = hexCharToInt(newString[i]);
+    }
+  }
+
+  return "0x" + newString;
+}
+
+string hexToDecimal(const string &strNumber);
+
+string hexToBinary(const string &strNumber);
