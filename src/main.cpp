@@ -24,16 +24,52 @@ string decimalToBinary(const string &strNumber);
 string decimalToHex(const string &strNumber);
 string hexToDecimal(const string &strNumber);
 string hexToBinary(const string &strNumber);
+string binaryToHex(const string &strNumber);
 
 
 int main () {
-  string num;
+  const string PROMPT = "HEX-DECIMAL-BINARY CONVERTER",
+               PROMPT_TWO = "Enter your string to convert (q to quit): ";
 
-  cout << "Hello World" << endl;
+  string choice, change;
+  char base;
 
-  num = decimalToBinary("216");
+  printTitle(PROMPT);
 
-  cout << num;
+  do{
+     choice = getNumber(PROMPT_TWO);
+
+     base = getBase(choice);
+
+     if(base == 'D'){
+      change = decimalToBinary(choice);
+
+      cout << "The binary conversion is: " << change << endl;
+
+      change = decimalToHex(choice);
+
+      cout << "The hexadecimal conversion is: " << change << endl << endl;
+     }
+     else if(base == 'B'){
+      change = binaryToDecimal(choice);
+
+      cout << "The decimal conversion is: " << change << endl;
+
+      change = binaryToHex(choice);
+
+      cout << "The hexadecimal conversion is: " << change << endl << endl;
+     }
+     else if(base == 'H'){
+      change = hexToDecimal(choice);
+
+      cout << "The decimal conversion is: " << change << endl;
+
+      //change = binaryToHex(choice);
+
+      //cout << "The hexadecimal conversion is: " << change << endl << endl;
+     }
+    
+  }while(choice != "q");
   
   return EXIT_SUCCESS;
 }
@@ -120,27 +156,74 @@ string decimalToBinary(const string &strNumber){
 }
 
 string decimalToHex(const string &strNumber){
-  int transition;
+  int transition, temp;
   string newString;
+  char base;
 
   transition = stoi(strNumber);
 
   while(transition > 0){
-    newString += to_string(transition % 16);
+    temp = transition % 16;
+
+    if(temp == 10){
+      base = 'A';
+      newString += base;
+    }
+    else if(temp == 11){
+      base = 'B';
+      newString += base;
+    }
+    else if(temp == 12){
+      base = 'C';
+      newString += base;
+    }
+    else if(temp == 13){
+      base = 'D';
+      newString += base;
+    }
+    else if(temp == 14){
+      base = 'E';
+      newString += base;
+    }
+    else if(temp == 15){
+      base = 'F';
+      newString += base;
+    }
+    else{
+      newString += to_string(temp);
+    }
     transition /= 16;
   }
 
   reverse(newString.begin(),newString.end());
 
-  for(int i = 0; i < newString.length(); i++){
-    if(newString[i] >= 10){
-      newString[i] = hexCharToInt(newString[i]);
-    }
-  }
-
   return "0x" + newString;
 }
 
-string hexToDecimal(const string &strNumber);
+string hexToDecimal(const string &strNumber){
+ int addUp = 0, base = 16, power = 0;
+  string newString;
+
+  for(int i = strNumber.length() - 1; i >= 2; i--){
+    if(strNumber[i] == 'A' || strNumber[i] == 'B' || strNumber[i] == 'C'
+       || strNumber[i] == 'D' || strNumber[i] == 'E' || strNumber[i] == 'F'){
+        addUp += pow(base, power) * hexCharToInt(strNumber[i]);
+    }
+
+    addUp += pow(base, power) * static_cast<int>(strNumber[i]);
+
+    power++;
+  }
+  return newString = to_string(addUp);
+}
 
 string hexToBinary(const string &strNumber);
+
+string binaryToHex(const string &strNumber){
+  string change;
+
+  change = binaryToDecimal(strNumber);
+  change = decimalToHex(change);
+
+  return change;
+}
