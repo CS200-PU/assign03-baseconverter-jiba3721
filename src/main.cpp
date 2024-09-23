@@ -33,6 +33,7 @@ int main () {
 
   string choice, change;
   char base;
+  int power = 0, addUp = 0, random, random2;
 
   printTitle(PROMPT);
 
@@ -60,7 +61,24 @@ int main () {
       cout << "The hexadecimal conversion is: " << change << endl << endl;
      }
      else if(base == 'H'){
-      change = hexToDecimal(choice);
+      //change = hexToDecimal(choice);
+
+
+     for(int i = choice.length() - 1; i >= 2; i--){
+      if(choice[i] == 'A' || choice[i] == 'B' || choice[i] == 'C'
+       || choice[i] == 'D' || choice[i] == 'E' || choice[i] == 'F'){
+        addUp += pow(16, power) * hexCharToInt(choice[i]);
+
+        random2 = choice[i];
+     }
+     else{
+      random2 = choice[i];
+
+      addUp += pow(16, power) * static_cast<int>(choice[i]);
+     }
+
+      power++;
+     }
 
       cout << "The decimal conversion is: " << change << endl;
 
@@ -209,15 +227,20 @@ string hexToDecimal(const string &strNumber){
        || strNumber[i] == 'D' || strNumber[i] == 'E' || strNumber[i] == 'F'){
         addUp += pow(base, power) * hexCharToInt(strNumber[i]);
     }
-
+    else{
     addUp += pow(base, power) * static_cast<int>(strNumber[i]);
+    }
 
     power++;
   }
   return newString = to_string(addUp);
 }
 
-string hexToBinary(const string &strNumber);
+string hexToBinary(const string &strNumber){
+  string change;
+  change = hexToDecimal(strNumber);
+  change = decimalToBinary(change);
+}
 
 string binaryToHex(const string &strNumber){
   string change;
